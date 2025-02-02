@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+        integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <title>Ana Sayfa</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+    <!-- Header -->
+    <header class="header">
+        <a href="/index" class="logo">
+            <img src="/images/logoss.png" alt="logo" />
+        </a>
+        <nav class="navbar">
+            <a href="/anasayfa" class="active">Ana Sayfa</a>
+            <a href="/menu">Menü</a>
+            <a href="/urunler">Ürünler</a>
+            <a href="/icecekler">İçecekler</a>
+            <a href="#footer">İletişim</a>
+            <a href="siparislerim">Siparişlerim</a>
+        </nav>
+        <div class="buttons">
+            <button id="cart-btn">
+                <i class="fas fa-shopping-cart"></i>
+            </button>
+            <button id="menu-btn">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+        <!-- Sepet öğeleri başlangıçta boş -->
+        <div class="cart-items-container">
+            <div class="sepet" style="display: flex; height: 80px; align-items: center; gap: 10px;">
+                <a href="javascript:void(0);" style="background-color: transparent; color: black; font-size: 15px; width: 250px; margin-top: 10px;">
+                    Tutar : <span class="price-value">0.00₺</span>
+                </a>
+                <a href="/kayit" id="siparis-ver-btn" class="btn" style="background-color: black; color: white; display: flex; justify-content: center; align-items: center; height: 50px; padding: 0 20px;">SİPARİŞ VER</a>
+            </div>
+        </div>
+    </header>
+    <!-- Header Bitiş -->
+
+    <!-- Ana Sayfa İçeriği -->
+    <section class="home" id="anasayfa">
+        <div class="content">
+            <h2>Açlığınızı Doyuran Lezzet!</h2>
+            <p>Taze ve sıcak yemek yemek ister misiniz?</p>
+            <a href="/menu" class="btn">Sipariş Ver</a>
+        </div>
+    </section>
+    <!-- Ana Sayfa İçeriği Bitiş -->
+
+    <!-- Footer -->
+    <section class="footer" id="footer">
+        <div class="share">
+            <a href="https://github.com/emredem1rr" target="_blank" class="fab fa-github"></a>
+            <a href="https://www.instagram.com/emre.dem1r" target="_blank" class="fab fa-instagram"></a>
+            <a href="https://x.com/emredem1r_" target="_blank" class="fab fa-twitter"></a>
+        </div>
+        <div class="credit" style="background-color: transparent;">
+            <i class="fa fa-map-marker" aria-hidden="true"></i> Amasya Üniversitesi Mühendislik Fakültesi, 05100 Amasya Merkez <br>
+            <i class="fa fa-phone" aria-hidden="true"></i> 0541 816 95 45<br>
+            created by <span>Emre Demir</span>...
+        </div>
+    </section>
+    <!-- Footer Bitiş -->
+
+    <script src="/js/script.js"></script>
+</body>
+
+</html>
