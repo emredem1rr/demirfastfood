@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin Paneli</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <style>
+      a {
+        text-decoration: none;
+      }
+      /* Genel Stil */
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #f4f4f9;
+        color: #333;
+        overflow-x: hidden;
+        transition: background-color 0.3s ease;
+      }
+
+      header {
+        background-color: #333;
+        color: #fff;
+        padding: 1rem;
+        text-align: center;
+        transition: background-color 0.3s ease;
+      }
+
+      header h1 {
+        margin: 0;
+        font-size: 2rem;
+        transform: translateY(-50px);
+        opacity: 0;
+        animation: fadeInHeader 0.8s forwards;
+      }
+
+      header nav {
+        margin-top: 10px;
+      }
+
+      header nav a {
+        color: #fff;
+        text-decoration: none;
+        margin: 0 10px;
+        font-weight: bold;
+        opacity: 0;
+        animation: fadeInNav 0.8s forwards 0.5s;
+      }
+
+      header nav a:hover {
+        text-decoration: underline;
+      }
+      header nav a#logout-btn {
+        position: absolute;
+        right: 20px;
+        transform: translateY(-50%);
+        padding: 10px 20px;
+        color: #fff;
+        border-radius: 5px;
+        text-align: center;
+        font-weight: bold;
+        text-decoration: none;
+        transition: background-color 0.3s ease;
+      }
+      @keyframes fadeInHeader {
+        to {
+          transform: translateY(0);
+          opacity: 1;
+        }
+      }
+
+      @keyframes fadeInNav {
+        to {
+          opacity: 1;
+        }
+      }
+
+      /* Section ve İçerik Alanı */
+      section {
+        max-width: 1300px;
+        margin: 20px auto;
+        padding: 1rem;
+        background-color: #fff;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        border-radius: 8px;
+        display: none;
+        transition: all 0.5s ease;
+        opacity: 0;
+        transform: scale(0.95);
+      }
+
+      section.show {
+        display: block;
+        opacity: 1;
+        transform: scale(1);
+      }
+
+      section h2 {
+        text-align: center;
+        margin-bottom: 20px;
+        color: #444;
+        animation: fadeInSection 1s forwards;
+      }
+
+      @keyframes fadeInSection {
+        to {
+          opacity: 1;
+        }
+      }
+
+      /* Tablo Stil */
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 10px 0;
+        animation: fadeInTable 1s forwards;
+        opacity: 0;
+      }
+
+      @keyframes fadeInTable {
+        to {
+          opacity: 1;
+        }
+      }
+
+      table th,
+      table td {
+        text-align: left;
+        padding: 10px;
+        border: 1px solid #ddd;
+        transition: background-color 0.3s ease;
+      }
+
+      table th {
+        background-color: #f8f8f8;
+        color: #333;
+      }
+
+      table tbody tr:nth-child(even) {
+        background-color: #f9f9f9;
+      }
+
+      table tbody tr:hover {
+        background-color: #f1f1f1;
+      }
+
+      table img {
+        border-radius: 4px;
+        transition: transform 0.3s ease;
+      }
+
+      table img:hover {
+        transform: scale(1.1);
+      }
+
+
+
+      /* Button Styling */
+      button {
+        padding: 12px 25px;
+        font-size: 1rem;
+        background-color: #007bff;
+        color: white;
+        border: none;
+        cursor: pointer;
+        border-radius: 5px;
+        transition: background-color 0.3s ease, transform 0.3s ease;
+      }
+
+      button:hover {
+        background-color: #0056b3;
+        transform: translateY(-3px);
+      }
+
+      /* Combobox Styling */
+      select {
+        width: 100%;
+        padding: 12px;
+        margin-top: 15px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        font-size: 1rem;
+        background-color: #fff;
+        transition: border-color 0.3s ease;
+      }
+
+      select:focus {
+        border-color: #007bff;
+        outline: none;
+      }
+
+      label {
+        font-weight: bold;
+        margin-bottom: 12px;
+        display: block;
+      }
+
+      input[type="text"],
+      input[type="number"],
+      input[type="file"] {
+        width: 95%;
+        padding: 12px;
+        margin-top: 15px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        font-size: 1rem;
+        transition: border-color 0.3s ease;
+      }
+
+      input[type="text"]:focus,
+      input[type="number"]:focus,
+      input[type="file"]:focus {
+        border-color: #007bff;
+        outline: none;
+      }
+
+      /* Form Styling */
+      form {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        padding: 20px;
+        background-color: #fff;
+        border-radius: 8px;
+        box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+        animation: fadeInForm 1s forwards;
+        opacity: 0;
+      }
+
+      @keyframes fadeInForm {
+        to {
+          opacity: 1;
+        }
+      }
+
+      form div {
+        display: flex;
+        flex-direction: column;
+      }
+
+      form div {
+        display: flex;
+        flex-direction: column;
+        width: 100%; /* Ensure div takes the full width of the form */
+      }
+
+      form div input[type="text"],
+      form div input[type="number"],
+      form div select {
+        width: 100%; /* Make sure inputs and selects occupy full width */
+        padding: 12px;
+        margin-top: 10px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        font-size: 1rem;
+        box-sizing: border-box; /* Include padding in the width calculation */
+      }
+
+      form div input[type="text"]:focus,
+      form div input[type="number"]:focus,
+      form div select:focus {
+        border-color: #007bff;
+        outline: none;
+      }
+
+      form button {
+        align-self: center;
+        padding: 12px 25px;
+        background-color: #28a745;
+        border-radius: 5px;
+        transition: background-color 0.3s ease, transform 0.3s ease;
+      }
+
+      form button:hover {
+        background-color: #218838;
+        transform: translateY(-3px);
+      }
+    </style>
+  </head>
+
+  <body>
+    <header>
+      <h1>Admin Paneli</h1>
+      <nav>
+        <a href="javascript:void(0)" id="manage-orders">Siparişleri Yönet</a>
+        <a href="javascript:void(0)" id="toggle-products">Ürünler</a>
+        <a href="javascript:void(0)" id="toggle-add-product">Ürün Ekle</a>
+        <!-- Çıkış Yap Butonu -->
+        <a href="/admin/logout" id="logout-btn" class="logout-btn">Çıkış Yap</a>
+      </nav>
+    </header>
+
+    <section id="add-product-section">
+      <h2>Yeni Ürün Ekle</h2>
+      <form
+        action="/admin/add-product"
+        method="POST"
+        enctype="multipart/form-data"
+      >
+        <div>
+          <label for="kategori">Kategori</label>
+          <select id="kategori" name="kategori" required>
+            <option value="URUN">Ürün</option>
+            <option value="MENU">Menü</option>
+            <option value="ICECEK">İçecek</option>
+          </select>
+        </div>
+
+        <div>
+          <label for="isim">Ürün İsmi</label>
+          <input type="text" id="isim" name="isim" required />
+        </div>
+
+        <div>
+          <label for="fiyat">Fiyat (₺)</label>
+          <input type="number" id="fiyat" name="fiyat" step="0.01" required />
+        </div>
+        <div>
+          <label for="eski_fiyat">Eski Fiyat (₺)</label>
+          <input type="number" id="eski_fiyat" name="eski_fiyat" step="0.01" />
+        </div>
+
+        <div>
+          <label for="gramaj">Gramaj</label>
+          <input type="number" id="gramaj" name="gramaj" required />
+        </div>
+
+        <div>
+          <label for="kalori">Kalori (cal)</label>
+          <input type="number" id="kalori" name="kalori" required />
+        </div>
+
+        <div>
+          <label for="resim">Resim</label>
+          <input
+            type="file"
+            id="resim"
+            name="resim"
+            accept="image/*"
+            style="width: 935px"
+            required
+          />
+        </div>
+
+        <button type="submit">Ürün Ekle</button>
+      </form>
+    </section>
+
+    <section id="product-list-section">
+      <h2>Ürünler</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Kategori</th>
+            <th>İsim</th>
+            <th>Fiyat</th>
+            <th>Eski Fiyat</th>
+            <th>Gramaj</th>
+            <th>Kalori</th>
+            <th>Resim</th>
+            <th>Düzenle</th>
+            <th>Sil</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% product.forEach(drink => { %>
+          <tr>
+            <td><%= drink.kategori %></td>
+            <td><%= drink.isim %></td>
+            <td><%= drink.fiyat %>₺</td>
+            <td><%= drink.eski_fiyat ? drink.eski_fiyat + '₺' : 'N/A' %></td>
+            <td><%= drink.gramaj %></td>
+            <td><%= drink.kalori %> cal</td>
+            <td>
+              <img
+                src="/<%= drink.resim %>"
+                alt="<%= drink.isim %>"
+                width="60"
+                height="60"
+              />
+            </td>
+            <td><a href="/admin/edit/<%= drink.id %>">Düzenle</a></td>
+            <td><a href="/admin/delete/<%= drink.id %>">Sil</a></td>
+          </tr>
+          <% }) %>
+        </tbody>
+      </table>
+    </section>
+    <section id="orders-section" class = "show">
+      <h2>Siparişler</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Sipariş Numarası</th>
+            <th>İsim</th>
+            <th>Telefon</th>
+            <th>Sipariş Durumu</th>
+            <th>Ürünler</th>
+            <th>Toplam Fiyat</th>
+            <th>Eylem</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- Loop through orders data and display each order -->
+          <% orders.forEach(order => { %>
+          <tr>
+            <td><%= order.id %></td>
+            <% if (order.User) { %>
+              <td><%= order.User.name %></td>
+              <td><%= order.User.phone %></td>
+            <% } else { %>
+              <td>Bilgi bulunamadı</td>
+              <td>Bilgi bulunamadı</td>
+            <% } %>
+            
+            <td><%= order.OrderStatus %></td>
+            <td>
+              <ul>
+                <% order.OrderItems.forEach(orderItem => { %>
+                <li>
+                  <%= orderItem.Product.isim %> - <%= orderItem.quantity %> x
+                  <%= orderItem.Product.fiyat %> TL
+                </li>
+                <% }); %>
+              </ul>
+            </td>
+            <td>
+              <!-- Calculate total price -->
+                <% let total = 0; %>
+                <% order.OrderItems.forEach(orderItem => { %>
+                <% total += orderItem.Product.fiyat * orderItem.quantity; %>
+                <% }); %>
+                <%= total.toFixed(2) %> TL
+
+            </td>
+            <td>
+              <a href="/admin/order/<%= order.id %>">Görüntüle</a>
+            </td>
+          </tr>
+          <% }); %>
+        </tbody>
+      </table>
+    </section>
+
+    <script>
+      document
+        .getElementById("toggle-products")
+        .addEventListener("click", function () {
+          document.getElementById("product-list-section").classList.add("show");
+          document
+            .getElementById("add-product-section")
+            .classList.remove("show");
+          document.getElementById("orders-section").classList.remove("show");
+        });
+      document
+        .getElementById("manage-orders")
+        .addEventListener("click", function () {
+          document.getElementById("orders-section").classList.add("show");
+          document
+            .getElementById("add-product-section")
+            .classList.remove("show");
+          document
+            .getElementById("product-list-section")
+            .classList.remove("show");
+        });
+      document
+        .getElementById("toggle-add-product")
+        .addEventListener("click", function () {
+          document.getElementById("add-product-section").classList.add("show");
+          document.getElementById("orders-section").classList.remove("show");
+          document
+            .getElementById("product-list-section")
+            .classList.remove("show");
+        });
+        
+    </script>
+  </body>
+</html>

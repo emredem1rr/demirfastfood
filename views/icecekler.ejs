@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+        integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <title>İçecekler</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+    <!-- Header Başlangıç -->
+    <header class="header">
+        <a href="/index" class="logo">
+            <img src="/images/logoss.png" alt="logo" />
+        </a>
+        <nav class="navbar">
+            <a href="/anasayfa">Ana Sayfa</a>
+            <a href="/menu">Menü</a>
+            <a href="/urunler">Ürünler</a>
+            <a href="/icecekler" class="active">İçecekler</a>
+            <a href="#footer">İletişim</a>
+            <a href="siparislerim">Siparişlerim</a>
+        </nav>
+        <div class="buttons">
+            <button id="cart-btn">
+                <i class="fas fa-shopping-cart"></i>
+            </button>
+            <button id="menu-btn">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+        <div class="cart-items-container">
+            <div class="sepet" style="display: flex; height: 80px; align-items: center; gap: 10px;">
+                <a href="javascript:void(0);" style="background-color: transparent; color: black; font-size: 15px; width: 250px; margin-top: 10px;">
+                    Tutar : <span class="price-value">0.00₺</span>
+                </a>
+                <a href="/kayit" id="siparis-ver-btn" class="btn" style="background-color: black; color: white; display: flex; justify-content: center; align-items: center; height: 50px; padding: 0 20px;">SİPARİŞ VER</a>
+                
+            </div>
+        </div>
+    </header>
+    <!-- Header Bitiş -->
+
+    <!-- İçecekler Bölümü -->
+    <section class="menü" id="menü">
+        <h1 class="heading">Ürün<span>ler</span></h1>
+        <div class="box-container">
+            <% drinks.forEach(urun => { %>
+                <div class="box">
+                    <div class="box-head">
+                        <div class='drink'>
+                            <img src="<%= urun.resim %>" alt="<%= urun.isim %>" />
+                        </div>
+                        <h3><%= urun.isim %></h3>
+                        <div class="price">
+                            <%= urun.fiyat %>₺
+                        </div>
+                        <div class="info">
+                            <span class="amount"><%= urun.gramaj %> ml/<%= urun.kalori %> cal</span>
+                        </div>
+                    </div>
+
+                    <div class="box-bottom">
+                        <a href="javascript:void(0);" 
+                            data-id="<%= urun.id %>" 
+                            data-quantity="1" 
+                            class="add-to-cart-btn">
+                            Sepete Ekle
+                        </a>
+                    </div>
+                </div>
+            <% }) %>
+        </div>
+    </section>
+    <!-- İçecekler Bölümü Bitiş -->
+
+    <!-- Footer -->
+    <section class="footer" id="footer">
+        <div class="share">
+            <a href="https://github.com/emredem1rr" target="_blank" class="fab fa-github"></a>
+            <a href="https://www.instagram.com/emre.dem1r" target="_blank" class="fab fa-instagram"></a>
+            <a href="https://x.com/emredem1r_" target="_blank" class="fab fa-twitter"></a>
+        </div>
+        <div class="credit" style="background-color: transparent;">
+            <i class="fa fa-map-marker" aria-hidden="true"> </i> Amasya Üniversitesi Mühendislik Fakültesi, 05100 Amasya Merkez <br><i class="fa fa-phone" aria-hidden="true"></i> 0541 816 95 45<br>
+            created by <span>Emre Demir</span>...
+        </div>
+    </section>
+    <!-- Footer Bitiş -->
+
+    <script src="/js/script.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</body>
+
+</html>

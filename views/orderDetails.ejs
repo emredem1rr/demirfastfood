@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sipariş Detayı</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f9;
+      color: #333;
+      padding: 20px;
+    }
+
+    .order-details {
+      max-width: 800px;
+      margin: 0 auto;
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      position: relative; /* Bu div'i relatif konumlandırıyoruz */
+    }
+
+    .order-details h1 {
+      text-align: center;
+      color: #333;
+    }
+
+    .order-details .order-info {
+      margin-bottom: 20px;
+    }
+
+    .order-details .order-info h2 {
+      color: #444;
+      margin-bottom: 10px;
+    }
+
+    .order-details .order-info p {
+      margin: 5px 0;
+    }
+
+    .order-details table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+
+    .order-details table th,
+    .order-details table td {
+      text-align: left;
+      padding: 10px;
+      border: 1px solid #ddd;
+    }
+
+    .order-details table th {
+      background-color: #f8f8f8;
+      color: #333;
+    }
+
+    .order-details table tbody tr:nth-child(even) {
+      background-color: #f9f9f9;
+    }
+
+    .order-details table tbody tr:hover {
+      background-color: #f1f1f1;
+    }
+
+    .order-details .total-price {
+      margin-top: 20px;
+      font-size: 1.2rem;
+      font-weight: bold;
+    }
+
+    .status-update-form {
+      margin-top: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .status-update-form select {
+      padding: 10px;
+      font-size: 1rem;
+    }
+
+    .status-update-form button {
+      padding: 10px 20px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      font-size: 1rem;
+      cursor: pointer;
+    }
+
+    .status-update-form button:hover {
+      background-color: #45a049;
+    }
+
+    /* Çıkış Butonu */
+    .logout-btn {
+      position: absolute;
+      bottom: 20px;
+      right: 20px;
+      padding: 11px 20px;
+      background-color: #e74c3c;
+      color: white;
+      border: none;
+      border-radius: 10px;
+      font-size: 1rem;
+      cursor: pointer;
+    }
+
+    .logout-btn:hover {
+      background-color: #c0392b;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="order-details">
+    <h1>Sipariş Detayı</h1>
+
+    <div class="order-info">
+      <h2>Sipariş Bilgisi</h2>
+      <p><strong>Sipariş Numarası:</strong> <%= order.id %></p>
+      <p><strong>İsim:</strong> <%= order.User.name %></p>
+      <p><strong>Telefon:</strong> <%= order.User.phone %></p>
+      <p><strong>Adres:</strong> <%= order.User.adress %></p>
+      <p><strong>Sipariş Durumu:</strong> <%= order.OrderStatus %></p>
+    </div>
+
+    <div class="order-info">
+      <h2>Ürünler</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Ürün İsmi</th>
+            <th>Adet</th>
+            <th>Fiyat</th>
+            <th>Toplam</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% let totalPrice = 0; %>
+          <% order.OrderItems.forEach(orderItem => { %>
+            <tr>
+              <td><%= orderItem.Product.isim %></td>
+              <td><%= orderItem.quantity %></td>
+              <td><%= orderItem.Product.fiyat %>₺</td>
+              <td><%= (orderItem.Product.fiyat * orderItem.quantity).toFixed(2) %>₺</td>
+            </tr>
+            <% totalPrice += orderItem.Product.fiyat * orderItem.quantity; %>
+          <% }); %>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="total-price">
+      <p><strong>Toplam Fiyat:</strong> <%= totalPrice.toFixed(2) %>₺</p>
+    </div>
+
+    <!-- Status Update Form -->
+    <div class="status-update-form">
+      <form action="<%= order.id %>" method="POST">
+        <select name="orderStatus" required>
+          <option value="ALINDI" <%= order.OrderStatus === 'ALINDI' ? 'selected' : '' %>>Sipariş Alındı</option>
+          <option value="HAZIRLANIYOR" <%= order.OrderStatus === 'HAZIRLANIYOR' ? 'selected' : '' %>>Hazırlanıyor</option>
+          <option value="YOLDA" <%= order.OrderStatus === 'YOLDA' ? 'selected' : '' %>>Yolda</option>
+          <option value="TAMAMLANDI" <%= order.OrderStatus === 'TAMAMLANDI' ? 'selected' : '' %>>Teslim Edildi</option>
+        </select>
+        <button type="submit">Durumu Güncelle</button>
+      </form>
+    </div>
+
+    <!-- Çıkış Butonu -->
+    <a href="/admin">
+      <button class="logout-btn">Çıkış</button>
+    </a>
+  </div>
+</body>
+
+</html>

@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Siparişlerim</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f9;
+      color: #333;
+      padding: 20px;
+    }
+
+    .orders-container {
+      max-width: 1000px;
+      margin: 0 auto;
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .orders-container h1 {
+      text-align: center;
+      color: #333;
+    }
+
+    .order-card {
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      margin-bottom: 20px;
+    }
+
+    .order-card h2 {
+      color: #444;
+    }
+
+    .order-card p {
+      margin: 5px 0;
+    }
+
+    .order-card .total-price {
+      margin-top: 20px;
+      font-size: 1.2rem;
+      font-weight: bold;
+    }
+
+    .logout-btn {
+      bottom: 20px;
+      right: 20px;
+      padding: 11px 20px;
+      background-color: #e74c3c;
+      color: white;
+      border: none;
+      border-radius: 10px;
+      font-size: 1rem;
+      cursor: pointer;
+    }
+
+    .logout-btn:hover {
+      background-color: #c0392b;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="orders-container">
+    <h1>Siparişlerim</h1>
+
+    <% if (orders.length > 0) { %>
+      <% orders.forEach(order => { %>
+        <div class="order-card">
+          <p><strong>Sipariş Durumu:</strong> <%= order.OrderStatus %></p>
+          <p><strong>İsim:</strong> <%= order.User.name %></p>
+          <p><strong>Email:</strong> <%= order.User.email %></p>
+          <p><strong>Telefon:</strong> <%= order.User.phone %></p>
+          <p><strong>Adres:</strong> <%= order.User.adress %></p>
+
+          <% let totalPrice = 0; %> <!-- Toplam fiyatı başlat -->
+          <h3>Ürünler:</h3>
+          <ul>
+            <% order.OrderItems.forEach(item => { %>
+              <li><%= item.Product.isim %> - Adet: <%= item.quantity %>, Fiyat: <%= (item.Product.fiyat * item.quantity).toFixed(2) %>₺</li>
+              <% totalPrice += item.Product.fiyat * item.quantity; %> <!-- Her ürünün fiyatını toplam fiyata ekle -->
+            <% }) %>
+          </ul>
+
+          <div class="total-price">
+            <p><strong>Toplam Fiyat:</strong> <%= totalPrice.toFixed(2) %>₺</p>
+          </div>
+        </div>
+      <% }) %>
+    <% } else { %>
+      <p>Henüz siparişiniz bulunmamaktadır.</p>
+    <% } %>
+
+    <a href="/anasayfa">
+      <button class="logout-btn">Çıkış</button>
+    </a>
+  </div>
+</body>
+
+</html>
